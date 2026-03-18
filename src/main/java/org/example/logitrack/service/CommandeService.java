@@ -8,6 +8,9 @@ import org.example.logitrack.repository.LigneCommandeRepository;
 import org.example.logitrack.repository.ProduitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -20,14 +23,16 @@ public class CommandeService {
     @Autowired
     private LigneCommandeRepository ligneCommandeRepository;
 
-    public Commande ajouterCommande(Commande commande){
+    public Commande ajouterCommande(Commande commande) {
         return commandeRepository.save(commande);
     }
-    public List<Commande> afficherCommandes(){
+
+    public List<Commande> afficherCommandes() {
         return commandeRepository.findAll();
-                
+
     }
-    public Commande consulterCommande(long id){
+
+    public Commande consulterCommande(long id) {
         return commandeRepository.findById(id).get();
     }
 
@@ -44,7 +49,17 @@ public class CommandeService {
 //        produitRepository.save(produit);
 //        return ligneCommandeRepository.save(ligneCommande);
 //    }
-//    public void modifierStatut(){
-//
-//    }
+
+
+    public Commande modifierStatutCommande( Long id,
+             String statut
+
+
+    ) {
+        Commande commande=commandeRepository.findById(id).get();
+        commande.setStatut(statut);
+        return commandeRepository.save(commande);
+
+
+    }
 }
