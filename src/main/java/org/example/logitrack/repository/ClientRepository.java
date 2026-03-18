@@ -1,6 +1,6 @@
-package repository;
+package org.example.logitrack.repository;
 
-import entity.Client;
+import org.example.logitrack.entity.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ClientRepository extends JpaRepository<Client,Long> {

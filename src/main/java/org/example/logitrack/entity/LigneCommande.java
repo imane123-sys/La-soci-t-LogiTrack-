@@ -1,4 +1,4 @@
-package entity;
+package org.example.logitrack.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

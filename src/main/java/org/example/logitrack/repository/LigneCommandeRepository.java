@@ -1,6 +1,6 @@
-package repository;
+package org.example.logitrack.repository;
 
-import entity.LigneCommande;
+import org.example.logitrack.entity.LigneCommande;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LigneCommandeRepository extends JpaRepository<LigneCommande,Long> {

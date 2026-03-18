@@ -1,8 +1,7 @@
-package repository;
+package org.example.logitrack.repository;
 
-import entity.Produit;
+import org.example.logitrack.entity.Produit;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Controller;
 
 
 public interface ProduitRepository  extends JpaRepository<Produit,Long> {

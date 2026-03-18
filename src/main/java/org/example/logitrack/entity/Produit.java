@@ -1,4 +1,4 @@
-package entity;
+package org.example.logitrack.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,6 +18,8 @@ public class Produit {
     private String nom;
     private String categorie;
     private double prix;
+
+    @Column(name = "quantite")
     private int quantiteStock;
 
     @OneToMany(mappedBy = "produit", cascade = CascadeType.ALL)
