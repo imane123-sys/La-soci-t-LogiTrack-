@@ -1,5 +1,6 @@
 package org.example.logitrack.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.List;
@@ -22,5 +23,6 @@ public class Client {
     private String ville;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Commande> commandes;
 }

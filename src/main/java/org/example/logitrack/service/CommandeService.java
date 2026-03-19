@@ -1,8 +1,10 @@
 package org.example.logitrack.service;
 
+import org.example.logitrack.entity.Client;
 import org.example.logitrack.entity.Commande;
 import org.example.logitrack.entity.LigneCommande;
 import org.example.logitrack.entity.Produit;
+import org.example.logitrack.repository.ClientRepository;
 import org.example.logitrack.repository.CommandeRepository;
 import org.example.logitrack.repository.LigneCommandeRepository;
 import org.example.logitrack.repository.ProduitRepository;
@@ -22,8 +24,18 @@ public class CommandeService {
     private ProduitRepository produitRepository;
     @Autowired
     private LigneCommandeRepository ligneCommandeRepository;
+    @Autowired
+    private ClientRepository clientRepository;
+    @Autowired
+    private ProduitService produitService;
+    @Autowired
+    private LigneCommandeService ligneCommandeService;
 
-    public Commande ajouterCommande(Commande commande) {
+    public Commande ajouterCommande(Commande commande,long idClient) {
+        Client client= clientRepository.findById(idClient)
+                .orElseThrow(()-> new RuntimeException("Client non trouvé avec:"+idClient));
+        commande.setClient(client);
+
         return commandeRepository.save(commande);
     }
 
@@ -36,25 +48,37 @@ public class CommandeService {
         return commandeRepository.findById(id).get();
     }
 
-    //
-//    public LigneCommande addProduitToOrder(Long idCommande , Long idProdutt , int quantite){
-//        Commande commande = commandeRepository.findById(idCommande).orElseThrow();
-//        Produit produit = produitRepository.findById(idProdutt).orElseThrow();
-//
-//        LigneCommande ligneCommande = new LigneCommande();
-//        ligneCommande.setCommande(commande);
-//        ligneCommande.setProduit(produit);
-//        ligneCommande.setQuantite(quantite);
-//        ligneCommande.setQuantite(produit.getQuantiteStock() - quantite);
-//        produitRepository.save(produit);
-//        return ligneCommandeRepository.save(ligneCommande);
-//    }
 
 
+public boolean ajouterProduitCommande(
+        long idProduit,
+        long idCommande,
+        int quantite
+
+){
+       Commande commande= commandeRepository.findById(idCommande).get();
+       Produit produit=produitService.consulterProduit(idProduit);
+
+
+       if(commande == null ||produit ==null || produit.getQuantiteStock()<quantite){
+           return false;
+       }
+       LigneCommande ligneCommande = new LigneCommande();
+       ligneCommande.setProduit(produit);
+       produit.getLignesCommande().add(ligneCommande);
+       commande.getLignesCommande().add(ligneCommande);
+       commandeRepository.save(commande);
+       produitService.ajouterProduit(produit);
+       ligneCommandeService.ajouterLigneCommande(ligneCommande);
+
+
+
+
+       return true;
+
+}
     public Commande modifierStatutCommande( Long id,
              String statut
-
-
     ) {
         Commande commande=commandeRepository.findById(id).get();
         commande.setStatut(statut);
