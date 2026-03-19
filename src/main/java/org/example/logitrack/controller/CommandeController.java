@@ -45,12 +45,12 @@ public class CommandeController {
         return commandeService.consulterCommande(id);
     }
     @PutMapping("{id}/edit")
-    public ResponseEntity<Commande> modifierStatut(
+    public ResponseEntity<Void> modifierStatut(
             @PathVariable long id,
             @RequestParam String statut
     ){
         Commande commande=commandeService.modifierStatutCommande(id,statut);
-        return ResponseEntity.ok(commande);
+        return ResponseEntity.ok().build();
 
 
 
