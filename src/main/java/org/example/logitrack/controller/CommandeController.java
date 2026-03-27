@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/commandes")
+@RequestMapping("api/orders")
 
 public class CommandeController {
     @Autowired
@@ -70,6 +70,11 @@ public class CommandeController {
         }
         return ResponseEntity.status(200).body("produit a été ajouté avec succés");
 
+    }
+    @GetMapping("/client/{clientId}")
+    public ResponseEntity<List<Commande>> getCommandesByClient(@PathVariable Long clientId) {
+        List<Commande> commandes = commandeService.getCommandesByClientId(clientId);
+        return ResponseEntity.ok(commandes);
     }
 
 
