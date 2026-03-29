@@ -24,4 +24,15 @@ public class ProduitService {
         return produitRepository.save(p);
 
     }
+    public List<Produit>getProduitsByCategorie(String categorie){
+        return produitRepository.findByCategorie(categorie);
+
+    }
+    public List<Produit>getProduitsByPrixInferieur(Double prix){
+        return produitRepository.findByPrixLessThan(prix);
+    }
+    public Produit getTopProduct(){
+        return produitRepository.findTopProduit();
+
+    }
 }

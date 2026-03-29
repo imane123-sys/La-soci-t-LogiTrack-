@@ -11,7 +11,7 @@ import org.example.logitrack.service.ProduitService;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/produits")
+@RequestMapping("api/products")
 
 public class ProduitController {
     @Autowired
@@ -49,6 +49,24 @@ public class ProduitController {
 
 
 
+    }
+    @GetMapping("/category/{category}")
+    public ResponseEntity<List<Produit>>getProduitsByCategorie(@PathVariable String categorie){
+        List<Produit>produits=produitService.getProduitsByCategorie(categorie);
+        return ResponseEntity.ok(produits);
+    }
+    @GetMapping("price/{price}")
+    public ResponseEntity<List<Produit>>getProduitsByPrixInferieur(@PathVariable Double price){
+        List<Produit>produits=produitService.getProduitsByPrixInferieur(price);
+        return ResponseEntity.ok(produits);
+    }
+    @GetMapping("/topProduct")
+    public ResponseEntity<Produit>getTopProduit(){
+        Produit topProduit=produitService.getTopProduct();
+        if(topProduit ==null){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(topProduit);
     }
 
 

@@ -89,4 +89,8 @@ public boolean ajouterProduitCommande(
     public List<Commande>getCommandesByClientId(Long clientId){
         return commandeRepository.findByClientId(clientId);
     }
+    public Long getTotalOrdersCount(){
+        return commandeRepository.countAllOrders();
+    }
+
 }

@@ -76,6 +76,10 @@ public class CommandeController {
         List<Commande> commandes = commandeService.getCommandesByClientId(clientId);
         return ResponseEntity.ok(commandes);
     }
+    @GetMapping("/count")
+    public ResponseEntity<Long>getTotalOrdersCount(){
+        return ResponseEntity.ok(commandeService.getTotalOrdersCount());
+    }
 
 
 }
