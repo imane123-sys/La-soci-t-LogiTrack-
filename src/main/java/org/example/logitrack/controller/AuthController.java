@@ -22,7 +22,7 @@ public class AuthController {
         return ResponseEntity.ok(authService.addUser(user));
     }
 
-    @PostMapping("/login")
+    @PostMapping("/login")git
     public ResponseEntity<String>login(@Valid @RequestBody LoginUser user){
         return ResponseEntity.ok(authService.login(user.getEmail(),user.getPassword()));
     }
