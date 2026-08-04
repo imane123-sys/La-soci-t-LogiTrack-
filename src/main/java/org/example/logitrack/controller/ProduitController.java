@@ -51,8 +51,8 @@ public class ProduitController {
 
     }
     @GetMapping("/category/{category}")
-    public ResponseEntity<List<Produit>>getProduitsByCategorie(@PathVariable String categorie){
-        List<Produit>produits=produitService.getProduitsByCategorie(categorie);
+    public ResponseEntity<List<Produit>>getProduitsByCategorie(@PathVariable String category){
+        List<Produit>produits=produitService.getProduitsByCategorie(category);
         return ResponseEntity.ok(produits);
     }
     @GetMapping("price/{price}")

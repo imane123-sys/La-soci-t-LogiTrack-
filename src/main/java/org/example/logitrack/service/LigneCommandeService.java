@@ -16,6 +16,9 @@ public class LigneCommandeService {
 
         return ligneCommandeRepository.save(ligneCommande);
     }
+    public Long countLignesCommandesClient(int idClient){
+        return ligneCommandeRepository.CountLignesCommandesClient(idClient);
+    }
 
 
 }
