@@ -21,7 +21,7 @@ public class Commande {
     private String statut;
 
     @ManyToOne
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name  = "client_id")
     private Client client;
 
     @OneToMany(mappedBy = "commande", cascade = CascadeType.ALL)

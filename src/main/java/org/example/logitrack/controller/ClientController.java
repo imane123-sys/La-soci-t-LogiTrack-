@@ -29,6 +29,7 @@ public class ClientController {
     }
     @PostMapping
     public ResponseEntity<Client>ajouterClient(
+
             @RequestParam String nom,
             @RequestParam String email,
             @RequestParam String telephone,
