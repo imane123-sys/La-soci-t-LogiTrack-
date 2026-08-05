@@ -3,6 +3,7 @@ package org.example.logitrack.controller;
 import org.example.logitrack.entity.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.example.logitrack.service.ClientService;
 
@@ -19,15 +20,18 @@ public class ClientController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'AGENT')")
     public List<Client> listeClients(){
         return clientService.afficherClients();
 
     }
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'AGENT')")
     public Client consulterClient(@PathVariable long id){
         return clientService.ConsulterClient(id);
     }
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<Client>ajouterClient(
 
             @RequestParam String nom,
@@ -44,6 +48,7 @@ public class ClientController {
 
     }
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void>supprimerClient(@PathVariable long id){
         clientService.SupprimerClient(id);
         return ResponseEntity.ok().build();//ou bien objet

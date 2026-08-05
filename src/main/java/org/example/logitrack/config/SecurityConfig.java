@@ -78,8 +78,7 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/auth/**").permitAll() // Routes d'inscription/connexion ouvertes
-                        .requestMatchers("/api/v1/admin/**").hasAuthority("ADMIN") // Exemple de route restreinte
+                        .requestMatchers("/api/v1/auth/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

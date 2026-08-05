@@ -4,6 +4,7 @@ import org.example.logitrack.entity.Commande;
 import org.example.logitrack.service.CommandeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.HandlerMapping;
 
@@ -20,6 +21,7 @@ public class CommandeController {
     private HandlerMapping resourceHandlerMapping;
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<Commande> ajouterCommande(
             @RequestParam LocalDate dateCommande,
             @RequestParam String statut,
@@ -36,23 +38,24 @@ public class CommandeController {
 
     }
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'AGENT')")
     public List<Commande>afficherCommandes(){
         return commandeService.afficherCommandes();
     }
     @GetMapping(("/{id}"))
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'AGENT')")
     public Commande consulterCommande(@PathVariable long id){
 
         return commandeService.consulterCommande(id);
     }
     @PutMapping("{id}/edit")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'AGENT')")
     public ResponseEntity<Void> modifierStatut(
             @PathVariable long id,
             @RequestParam String statut
     ){
         Commande commande=commandeService.modifierStatutCommande(id,statut);
         return ResponseEntity.ok().build();
-
-
 
 
     }
@@ -72,11 +75,13 @@ public class CommandeController {
 
     }
     @GetMapping("/client/{clientId}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'AGENT')")
     public ResponseEntity<List<Commande>> getCommandesByClient(@PathVariable Long clientId) {
         List<Commande> commandes = commandeService.getCommandesByClientId(clientId);
         return ResponseEntity.ok(commandes);
     }
     @GetMapping("/count")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<Long>getTotalOrdersCount(){
         return ResponseEntity.ok(commandeService.getTotalOrdersCount());
     }

@@ -1,6 +1,6 @@
 package org.example.logitrack.dtos;
 
-=
+
 import lombok.*;
 
 @Getter
