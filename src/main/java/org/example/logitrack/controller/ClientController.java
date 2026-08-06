@@ -35,13 +35,13 @@ public class ClientController {
     public ResponseEntity<Client>ajouterClient(
 
             @RequestParam String nom,
-            @RequestParam String email,
+            @RequestParam String prenom,
             @RequestParam String telephone,
             @RequestParam  String ville
     ) {
         Client client = new Client();
         client.setNom(nom);
-        client.setEmail(email);
+        client.setPrenom(prenom);
         client.setTelephone(telephone);
         client.setVille(ville);
        return ResponseEntity.ok(clientService.ajouterClient(client));
@@ -51,7 +51,7 @@ public class ClientController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void>supprimerClient(@PathVariable long id){
         clientService.SupprimerClient(id);
-        return ResponseEntity.ok().build();//ou bien objet
+        return ResponseEntity.ok().build();
 
 
 

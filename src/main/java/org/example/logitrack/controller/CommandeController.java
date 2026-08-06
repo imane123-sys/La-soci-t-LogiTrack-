@@ -60,6 +60,7 @@ public class CommandeController {
 
     }
     @PostMapping("/{orderId}/products")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<String>ajouterProduitCommande(
             @PathVariable long orderId,
             @RequestParam long idProduit,

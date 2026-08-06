@@ -1,8 +1,10 @@
 package org.example.logitrack.entity;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.util.List;
 
 @Entity
@@ -11,14 +13,17 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Client {
+public class Client{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String nom;
-    private String email;
+
+    @Column(nullable = false)
+    private String prenom;
     private String telephone;
     private String ville;
 

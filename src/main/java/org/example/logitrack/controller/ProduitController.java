@@ -19,16 +19,14 @@ public class ProduitController {
    private  ProduitService produitService;
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN','MANAGER','AGENT')")
-
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'AGENT')")
     public List<Produit> listeProduits(){
         return produitService.afficherListeProduit();
 
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','MANAGER','AGENT')")
-
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'AGENT')")
     public Produit consulterProduit(@PathVariable long id){
         return produitService.consulterProduit(id);
     }
@@ -61,16 +59,14 @@ public class ProduitController {
     }
 
     @GetMapping("/category/{category}")
-    @PreAuthorize("hasAnyRole('ADMIN','MANAGER','AGENT')")
-
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'AGENT')")
     public ResponseEntity<List<Produit>>getProduitsByCategorie(@PathVariable String category){
         List<Produit>produits=produitService.getProduitsByCategorie(category);
         return ResponseEntity.ok(produits);
     }
 
     @GetMapping("price/{price}")
-    @PreAuthorize("hasAnyRole('ADMIN','MANAGER','AGENT')")
-
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'AGENT')")
     public ResponseEntity<List<Produit>>getProduitsByPrixInferieur(@PathVariable Double price){
         List<Produit>produits=produitService.getProduitsByPrixInferieur(price);
         return ResponseEntity.ok(produits);

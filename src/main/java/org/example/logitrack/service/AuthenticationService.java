@@ -30,7 +30,7 @@ public class AuthenticationService {
         user.setPrenom(request.getPrenom());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRole(request.getRole() != null ? Role.valueOf(request.getRole()) : Role.ROLE_AGENT);
+        user.setRole(Role.AGENT); // Only admins should assign higher roles via a separate endpoint
 
         userRepository.save(user);
 
