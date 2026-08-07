@@ -25,12 +25,15 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(UserRegistrationDTO request) {
-        var user = new User();
+        User user = new User();
         user.setNom(request.getNom());
         user.setPrenom(request.getPrenom());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRole(Role.AGENT); // Only admins should assign higher roles via a separate endpoint
+
+        user.setRole(Role.valueOf(request.getRole()));
+
+
 
         userRepository.save(user);
 

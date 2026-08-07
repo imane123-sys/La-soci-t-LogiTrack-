@@ -87,5 +87,17 @@ public class CommandeController {
         return ResponseEntity.ok(commandeService.getTotalOrdersCount());
     }
 
-
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    public ResponseEntity<Commande> modifierCommande(
+            @PathVariable long id,
+            @RequestParam LocalDate dateCommande,
+            @RequestParam String statut,
+            @RequestParam Long idClient
+    ) {
+        Commande commandeDetails = new Commande();
+        commandeDetails.setDateCommande(dateCommande);
+        commandeDetails.setStatut(statut);
+        return ResponseEntity.ok(commandeService.modifierCommande(id, commandeDetails, idClient));
+    }
 }

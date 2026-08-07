@@ -92,5 +92,16 @@ public boolean ajouterProduitCommande(
     public Long getTotalOrdersCount(){
         return commandeRepository.countAllOrders();
     }
-
+    public Commande modifierCommande(long id, Commande commandeDetails, Long idClient) {
+        Commande commande = commandeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Commande non trouvée avec l'id : " + id));
+        commande.setDateCommande(commandeDetails.getDateCommande());
+        commande.setStatut(commandeDetails.getStatut());
+        if (idClient != null) {
+            Client client = clientRepository.findById(idClient)
+                    .orElseThrow(() -> new RuntimeException("Client non trouvé avec l'id : " + idClient));
+            commande.setClient(client);
+        }
+        return commandeRepository.save(commande);
+    }
 }

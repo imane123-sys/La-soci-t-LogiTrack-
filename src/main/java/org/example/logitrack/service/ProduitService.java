@@ -33,6 +33,18 @@ public class ProduitService {
     }
     public Produit getTopProduct(){
         return produitRepository.findTopProduit();
+    }
+    public Produit modifierProduit(long id, Produit produitRequest) {
+        Produit p = produitRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Produit non trouvé avec l'id : " + id));
+        p.setNom(produitRequest.getNom());
+        p.setCategorie(produitRequest.getCategorie());
+        p.setPrix(produitRequest.getPrix());
+        p.setQuantiteStock(produitRequest.getQuantiteStock());
+        return produitRepository.save(p);
+    }
 
+    public List <Produit> findByPrix(Double prix){
+        return produitRepository.findByPrix(prix);
     }
 }

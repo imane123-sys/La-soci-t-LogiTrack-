@@ -34,16 +34,14 @@ public class ProduitController {
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<Produit> ajouterProduit(
-            @RequestParam String nom,
-            @RequestParam String categorie,
-            @RequestParam double prix,
-            @RequestParam  int quantiteStock
+           @RequestBody Produit produitOBJ
+
     ) {
         Produit produit = new Produit();
-        produit.setNom(nom);
-        produit.setCategorie(categorie);
-        produit.setPrix(prix);
-        produit.setQuantiteStock(quantiteStock);
+        produit.setNom(produitOBJ.getNom());
+        produit.setCategorie(produitOBJ.getCategorie());
+        produit.setPrix(produitOBJ.getPrix());
+        produit.setQuantiteStock(produitOBJ.getQuantiteStock());
         return ResponseEntity.ok(produitService.ajouterProduit(produit));
 
     }
@@ -83,5 +81,18 @@ public class ProduitController {
         return ResponseEntity.ok(topProduit);
     }
 
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    public ResponseEntity<Produit> modifierProduit(
+            @PathVariable long id,
+            @RequestBody Produit produitRequest
+    ) {
+        return ResponseEntity.ok(produitService.modifierProduit(id, produitRequest));
+    }
+    @GetMapping("/findProduitParPrix/{prix}")
 
+    public ResponseEntity<List<Produit>> findByPrix(@RequestParam Double prix){
+        return ResponseEntity.ok(produitService.findByPrix(prix));
+
+    }
 }

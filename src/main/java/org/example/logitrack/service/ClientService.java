@@ -28,4 +28,13 @@ public class ClientService {
     public void SupprimerClient(long id){
          clientRepository.deleteById(id);
     }
+    public Client modifierClient(long id, Client clientRequest) {
+        Client client = clientRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Client non trouvé avec l'id : " + id));
+        client.setNom(clientRequest.getNom());
+        client.setPrenom(clientRequest.getPrenom());
+        client.setTelephone(clientRequest.getTelephone());
+        client.setVille(clientRequest.getVille());
+        return clientRepository.save(client);
+    }
 }

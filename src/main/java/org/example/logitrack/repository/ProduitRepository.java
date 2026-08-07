@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface ProduitRepository  extends JpaRepository<Produit,Long> {
     List<Produit> findByCategorie(String categorie);
+    List <Produit> findByPrix(Double prix);
     List<Produit>findByPrixLessThan(Double prix);
     @Query("SELECT lc.produit FROM LigneCommande lc GROUP BY lc.produit ORDER BY SUM(lc.quantite) DESC LIMIT 1")
     Produit findTopProduit();

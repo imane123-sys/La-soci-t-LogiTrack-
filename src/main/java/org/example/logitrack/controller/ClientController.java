@@ -34,16 +34,13 @@ public class ClientController {
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<Client>ajouterClient(
 
-            @RequestParam String nom,
-            @RequestParam String prenom,
-            @RequestParam String telephone,
-            @RequestParam  String ville
+           @RequestBody Client client_request
     ) {
         Client client = new Client();
-        client.setNom(nom);
-        client.setPrenom(prenom);
-        client.setTelephone(telephone);
-        client.setVille(ville);
+        client.setNom(client_request.getNom());
+        client.setPrenom(client_request.getPrenom());
+        client.setTelephone(client_request.getTelephone());
+        client.setVille(client_request.getVille());
        return ResponseEntity.ok(clientService.ajouterClient(client));
 
     }
@@ -57,6 +54,13 @@ public class ClientController {
 
     }
 
-
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    public ResponseEntity<Client> modifierClient(
+            @PathVariable long id,
+            @RequestBody Client clientRequest
+    ) {
+        return ResponseEntity.ok(clientService.modifierClient(id, clientRequest));
+    }
 
 }
