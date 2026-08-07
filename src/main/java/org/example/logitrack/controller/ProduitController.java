@@ -90,8 +90,9 @@ public class ProduitController {
         return ResponseEntity.ok(produitService.modifierProduit(id, produitRequest));
     }
     @GetMapping("/findProduitParPrix/{prix}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER','AGENT')")
 
-    public ResponseEntity<List<Produit>> findByPrix(@RequestParam Double prix){
+    public ResponseEntity<List<Produit>> findByPrix(@PathVariable Double prix){
         return ResponseEntity.ok(produitService.findByPrix(prix));
 
     }
