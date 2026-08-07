@@ -28,6 +28,7 @@ CREATE TABLE client (
     nom VARCHAR(100) NOT NULL,
     prenom VARCHAR(100) NOT NULL,
     telephone VARCHAR(20),
+    email VARCHAR(25) UNIQUE ,
     ville VARCHAR(100)
 );
 

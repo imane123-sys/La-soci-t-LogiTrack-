@@ -8,9 +8,9 @@ INSERT INTO users (id, nom, prenom, email, password, role) VALUES
 INSERT INTO admin (id) VALUES (1);
 INSERT INTO manager (id) VALUES (2);
 
-INSERT INTO client (id, nom, prenom, telephone, ville) VALUES
-    (1, 'Benani', 'Youssef', '+212600112233', 'Casablanca'),
-    (2, 'El Amrani', 'Sara', '+212677889900', 'Rabat');
+INSERT INTO client (id, nom, prenom,email, telephone, ville) VALUES
+    (1, 'Benani', 'Youssef','bennani@gmail.com', '+212600112233', 'Casablanca'),
+    (2, 'El Amrani', 'Sara', 'sara@gmail.com','+212677889900', 'Rabat');
 
 INSERT INTO produit (id, nom, categorie, prix, quantite) VALUES
     (1, 'Pc Portable Dell XPS 15', 'Informatique', 15000.00, 20),

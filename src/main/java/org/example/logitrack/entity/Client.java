@@ -25,6 +25,9 @@ public class Client{
     @Column(nullable = false)
     private String prenom;
     private String telephone;
+    @Column(unique = true)
+    private String email;
+
     private String ville;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
