@@ -33,6 +33,7 @@ public class ClientService {
                 .orElseThrow(() -> new RuntimeException("Client non trouvé avec l'id : " + id));
         client.setNom(clientRequest.getNom());
         client.setPrenom(clientRequest.getPrenom());
+        client.setEmail(clientRequest.getEmail());
         client.setTelephone(clientRequest.getTelephone());
         client.setVille(clientRequest.getVille());
         return clientRepository.save(client);

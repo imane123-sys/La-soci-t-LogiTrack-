@@ -39,6 +39,7 @@ public class ClientController {
         Client client = new Client();
         client.setNom(client_request.getNom());
         client.setPrenom(client_request.getPrenom());
+        client.setEmail(client_request.getEmail());
         client.setTelephone(client_request.getTelephone());
         client.setVille(client_request.getVille());
        return ResponseEntity.ok(clientService.ajouterClient(client));
