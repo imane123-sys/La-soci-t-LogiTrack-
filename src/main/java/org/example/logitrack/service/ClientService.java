@@ -2,6 +2,8 @@ package org.example.logitrack.service;
 
 import org.example.logitrack.entity.Client;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.example.logitrack.repository.ClientRepository;
 
@@ -37,5 +39,12 @@ public class ClientService {
         client.setTelephone(clientRequest.getTelephone());
         client.setVille(clientRequest.getVille());
         return clientRepository.save(client);
+    }
+    public List<Client> getClientsNom(String nom){
+        return clientRepository.findByNom(nom);
+    }
+
+    public Page<Client>getAllClients(Pageable pageable){
+        return clientRepository.findAll(pageable);
     }
 }
