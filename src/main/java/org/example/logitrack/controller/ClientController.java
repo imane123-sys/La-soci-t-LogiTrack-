@@ -23,13 +23,13 @@ public class ClientController {
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'AGENT')")
-    public List<Client> listeClients(){
+    public List<Client> listeClients() {
         return clientService.afficherClients();
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'AGENT')")
-    public Client consulterClient(@PathVariable long id){
+    public Client consulterClient(@PathVariable long id) {
         return clientService.ConsulterClient(id);
     }
 
@@ -47,7 +47,7 @@ public class ClientController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> supprimerClient(@PathVariable long id){
+    public ResponseEntity<Void> supprimerClient(@PathVariable long id) {
         clientService.SupprimerClient(id);
         return ResponseEntity.ok().build();
     }
@@ -63,15 +63,15 @@ public class ClientController {
 
     @GetMapping("/getClientsNom/{nom}")
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'AGENT')")
-    public ResponseEntity<List<Client>> getClientsNom(@PathVariable String nom){
+    public ResponseEntity<List<Client>> getClientsNom(@PathVariable String nom) {
         return ResponseEntity.ok(clientService.getClientsNom(nom));
     }
+
     @GetMapping("/clientsPagines")
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'AGENT')")
-    public ResponseEntity<Page<Client>> getAllClients(Pageable pageable) {
-
-        return ResponseEntity.ok(
-                clientService.getAllClients(pageable));
+    public Page<Client> getAllClients(Pageable pageable) {
+        System.out.println(pageable);
+        return clientService.getAllClients(pageable);
     }
 
 }

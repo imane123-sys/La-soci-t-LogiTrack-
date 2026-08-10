@@ -45,6 +45,7 @@ public class ClientService {
     }
 
     public Page<Client>getAllClients(Pageable pageable){
+        System.out.println(pageable);
         return clientRepository.findAll(pageable);
     }
 }
