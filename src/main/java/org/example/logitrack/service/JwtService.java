@@ -24,10 +24,11 @@ public class JwtService {
     @Value("${application.security.jwt.secret-key}")
     private String secretKey;
 
-    @Value("${application.security.jwt.expiration}")
+    @Value("${application.security.jwt.expiration}")//1H
     private long jwtExpiration;
 
     public String extractUsername(String token) {
+
         return extractClaim(token, Claims::getSubject);
     }
 
@@ -37,6 +38,7 @@ public class JwtService {
     }
 
     public String generateToken(UserDetails userDetails) {
+
         return generateToken(new HashMap<>(), userDetails);
     }
 
@@ -75,7 +77,7 @@ public class JwtService {
                 .setSigningKey(getSignInKey())
                 .build()
                 .parseClaimsJws(token)
-                .getBody();
+                .getBody();//payload
     }
 
     private SecretKey getSignInKey() {

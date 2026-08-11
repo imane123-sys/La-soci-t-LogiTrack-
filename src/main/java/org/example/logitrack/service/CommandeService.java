@@ -80,8 +80,23 @@ public boolean ajouterProduitCommande(
     public Commande modifierStatutCommande( Long id,
              String statut
     ) {
-        Commande commande=commandeRepository.findById(id).get();
-        commande.setStatut(statut);
+
+        Commande commande = commandeRepository.findById(id).get();
+        if (statut.equals("Expedié") && commande("Expedié")) {
+            statut.
+
+
+            commande.setStatut("Expedié");
+
+        }
+        if(commande.getStatut().equals("Expedié")){
+            commande.setStatut("Livré");
+
+
+
+        }
+        throw new RuntimeException("Erreur  vous nous pouvez plus modifier " + id );
+
         return commandeRepository.save(commande);
 
 
@@ -103,5 +118,12 @@ public boolean ajouterProduitCommande(
             commande.setClient(client);
         }
         return commandeRepository.save(commande);
+    }
+
+    public  Commande InterditStatut( Long idCommande){
+        Commande commande= commandeRepository.findById(idCommande).orElseThrow();
+        if()
+
+
     }
 }
