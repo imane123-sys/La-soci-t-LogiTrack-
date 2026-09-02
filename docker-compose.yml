@@ -1,0 +1,104 @@
+services:
+
+  mysql:
+    image: mysql:8.0
+    container_name: logitrack-mysql
+    environment:
+      MYSQL_DATABASE: logitrack
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - logitrack-network
+
+  logitrack:
+    build: .
+    container_name: logitrack
+    ports:
+      - "8081:8081"
+
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/logitrack
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+
+    depends_on:
+      - mysql
+
+    networks:
+      - logitrack-network
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./monitoring/prometheus/alerts.yml:/etc/prometheus/alerts.yml
+    depends_on:
+      - logitrack
+    networks:
+      - logitrack-network
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
+    depends_on:
+      - prometheus
+      - loki
+    networks:
+      - logitrack-network
+
+  loki:
+    image: grafana/loki
+    container_name: loki
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./monitoring/loki/loki-config.yml:/etc/loki/local-config.yaml
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - logitrack-network
+
+  alloy:
+    image: grafana/alloy
+    container_name: alloy
+    user: root
+    volumes:
+      - ./monitoring/alloy/config.alloy:/etc/alloy/config.alloy
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+    command:
+      - run
+      - /etc/alloy/config.alloy
+    depends_on:
+      - loki
+    networks:
+      - logitrack-network
+
+  alertmanager:
+    image: prom/alertmanager
+    container_name: alertmanager
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./monitoring/alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+    command:
+      - --config.file=/etc/alertmanager/alertmanager.yml
+    networks:
+      - logitrack-network
+
+
+volumes:
+  mysql_data:
+
+
+networks:
+  logitrack-network:
